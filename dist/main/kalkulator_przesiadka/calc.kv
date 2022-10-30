@@ -1,0 +1,420 @@
+#:import Factory kivy.factory.Factory
+
+
+WindowManager:
+    MainWindow:
+    Components:
+    Pizzas:
+    Calc:
+    Comp_Change:
+    Pizza_Change:
+
+
+
+<ChangeData@Popup>
+
+    title: "Wprowadź nową warość (tylko liczby bez jednostek)"
+    size_hint: 0.6, 0.4
+
+    GridLayout:
+        cols: 1
+        TextInput:
+            id: change
+            multiline:False
+            text: ''
+
+        Button:
+            text: 'Zmień'
+            on_press:
+                root.save()
+                root.dismiss()
+
+        Button:
+            text: 'Anuluj'
+            on_press:
+                root.dismiss()
+
+<Select_com@Popup>
+
+    title: "Wybierz składnik"
+    size_hint: 0.6, 0.9
+
+    GridLayout:
+        cols:1
+        ScrollView:
+            do_scroll_x: False
+            GridLayout:
+                cols:5
+                size_hint: 1, None
+                height:self.minimum_height
+                id:comp
+
+
+<Select_Sos@Popup>
+
+    title: "Wybierz sos"
+    size_hint: 0.6, 0.4
+
+    GridLayout:
+        cols:1
+        Button:
+            text: 'pomidorowy'
+            on_press:
+                root.tomato()
+                root.dismiss()
+
+        Button:
+            text: 'czosnkowy'
+            on_press:
+                root.garlic()
+                root.dismiss()
+
+        Button:
+            text: 'bbq'
+            on_press:
+                root.bbq()
+                root.dismiss()
+
+
+<ChangeDataDelete@Popup>
+
+    title: "Wprowadź nową warość"
+    size_hint: 0.6, 0.4
+
+    GridLayout:
+        cols: 1
+        TextInput:
+
+            id: change
+            multiline:False
+            text: ''
+
+        Button:
+            text: 'Zmień'
+            on_press:
+                root.save()
+                root.dismiss()
+        Button:
+            text: 'Usuń'
+            on_press:
+                root.delete()
+                root.dismiss()
+
+        Button:
+            text: 'Anuluj'
+            on_press:
+                root.dismiss()
+
+<ChangePizzaDelete@Popup>
+
+    title: "Wprowadź nową Nazwę lub usuń"
+    size_hint: 0.6, 0.4
+
+    GridLayout:
+        cols: 1
+        TextInput:
+
+            id: change
+            multiline:False
+            text: ''
+
+        Button:
+            text: 'Zmień'
+            on_press:
+                root.save()
+                root.dismiss()
+        Button:
+            text: 'Usuń'
+            on_press:
+                root.delete()
+                root.dismiss()
+
+        Button:
+            text: 'Anuluj'
+            on_press:
+                root.dismiss()
+
+
+
+<NewComp@Popup>
+
+    title: "Wprowadź nowy składnik"
+    size_hint: 0.6, 0.4
+
+    GridLayout:
+        cols: 2
+        Label:
+            text: 'Nazwa'
+        TextInput:
+            id: name
+            multiline:False
+            text: ''
+
+        Label:
+            text: "duża pizza (g)"
+        TextInput:
+            id: large
+            multiline:False
+            text: ''
+
+        Label:
+            text: "średnia pizza (g)"
+        TextInput:
+            id: med
+            multiline:False
+            text: ''
+
+        Label:
+            text: "mała pizza (g)"
+        TextInput:
+            id: small
+            multiline:False
+            text: ''
+
+        Label:
+            text: "cena za g"
+        TextInput:
+            id: price
+            multiline:False
+            text: ''
+
+        Button:
+            text: 'Dodaj'
+            on_press:
+                root.save()
+                root.dismiss()
+
+        Button:
+            text: 'Anuluj'
+            on_press:
+                root.dismiss()
+
+<NewPizza@Popup>
+
+    title: "Wprowadź nową pizzę"
+    size_hint: 0.6, 0.4
+
+    GridLayout:
+        cols: 2
+        Label:
+            text: 'Nazwa'
+        TextInput:
+            id: name
+            multiline:False
+            text: ''
+
+
+
+        Button:
+            text: 'Dodaj'
+            on_press:
+                root.save()
+                root.dismiss()
+
+        Button:
+            text: 'Anuluj'
+            on_press:
+                root.dismiss()
+
+
+
+<MainWindow>:
+
+    name: "main"
+
+    GridLayout:
+        cols:1
+        size_hint: 0.3, 1
+        pos_hint: {'center_x': 0.5}
+        GridLayout:
+            cols: 1
+
+            Label:
+                text: "Kalkulator Pizz. Powered by Rogal"
+
+        Button:
+            text: "Składniki"
+            size_hint: 0.2, 0.2
+            on_release:
+                app.root.current = "comp"
+                root.manager.transition.direction = "left"
+
+
+        Button:
+            text: "Pizze"
+            size_hint: 0.2, 0.2
+            on_release:
+                app.root.current = "pizza"
+                root.manager.transition.direction = "left"
+
+        Button:
+            text: "Kalkulator"
+            size_hint: 0.2, 0.2
+            on_release:
+                app.root.current = "calc"
+                root.manager.transition.direction = "left"
+
+<Components>:
+
+    name: "comp"
+
+    GridLayout:
+        cols:1
+        GridLayout:
+            size_hint: 1, .2
+            cols:5
+            Label:
+                text: "Nazwa"
+            Label:
+                text: "Duża pizza"
+            Label:
+                text: "Średnia pizza"
+            Label:
+                text: "Mała pizza"
+            Label:
+                text: "Cena za gram"
+
+
+
+        ScrollView:
+            do_scroll_x: False
+            GridLayout:
+                cols:5
+                size_hint: 1, None
+                height:self.minimum_height
+                id:compo
+
+
+
+
+
+        GridLayout:
+            cols: 2
+            size_hint: 1, .2
+            Button:
+
+                text: "Powrót"
+                on_release:
+                    app.root.current = "main"
+                    root.manager.transition.direction = "right"
+            Button:
+
+                text: "Dodaj składnik"
+                on_release: Factory.NewComp().open()
+
+<Pizzas>:
+
+    name: "pizza"
+
+    GridLayout:
+        cols:1
+
+        GridLayout:
+            cols: 1
+
+
+            ScrollView:
+                do_scroll_x: False
+                GridLayout:
+                    cols:9
+                    size_hint: 1, None
+                    height:self.minimum_height
+                    id:pizza
+
+        GridLayout:
+            cols: 2
+            size_hint: 1, .2
+            Button:
+
+                text: "Powrót"
+                on_release:
+                    app.root.current = "main"
+                    root.manager.transition.direction = "right"
+            Button:
+
+                text: "Dodaj Pizzę"
+                on_release: Factory.NewPizza().open()
+
+
+
+<Pizza_Change>:
+    name: "pizza_change"
+    Label:
+        text: "Zmiana"
+
+
+<Calc>:
+
+    name: "calc"
+
+
+
+    GridLayout:
+        cols: 1
+        GridLayout:
+            size_hint: 1, .1
+            cols: 3
+            Label:
+                text: "Ceny składników"
+            Label:
+                id: ciasto
+                text: ""
+            Label:
+                id: ser
+                text: ""
+        GridLayout:
+            size_hint: 1, .1
+            cols: 14
+            Label:
+                text: "Nazwa"
+            Label:
+                text: "Koszt dużej"
+            Label:
+                text: "Koszt średniej"
+            Label:
+                text: "Koszt małej"
+            Label:
+                text: ""
+            Label:
+                text: ""
+            Label:
+                text: ""
+            Label:
+                text: ""
+            Label:
+                text: ""
+            Label:
+                text: ""
+            Label:
+                text: ""
+            Label:
+                text: ""
+            Label:
+                text: ""
+            Label:
+                text: ""
+
+        ScrollView:
+            do_scroll_x: False
+            GridLayout:
+                spacing: 10
+
+                cols:14
+                size_hint: 1, None
+                height:self.minimum_height
+                id:calc
+
+
+
+        Button:
+            size_hint: 0.1, 0.1
+            text: "Powrót"
+            on_release:
+                app.root.current = "main"
+                root.manager.transition.direction = "right"
+
+
+<Comp_Change>:
+    name: "comp_change"
+    Label:
+        text: "Zmiana"
